@@ -222,7 +222,7 @@ Inside the registration directory, create a file called ``` register.html ``` an
 <body>
     <h1>User Registration</h1>
     <form method="POST">
-        {%csrf_token%}
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
