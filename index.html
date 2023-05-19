@@ -1,31 +1,110 @@
-<h1 id="django-for-beginners">django-for-beginners</h1>
-<p>Welcome to the Django for beginners! In this tutorial, we will walk through building a simple web application using Django. We&#39;ll cover the essential concepts. By following this hands-on approach, you&#39;ll gain understanding of Django&#39;s core features. Let&#39;s get started!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django For Beginners</title>
+    <style>
+         body {
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      margin: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    pre {
+      background-color: #f0f0f0;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+    </style>
+</head>
+<body>
+    <h1 id="django-for-beginners">django-for-beginners</h1>
+<p>
+  Welcome to the Django for beginners! In this tutorial, we will walk through
+  building a simple web application using Django. We&#39;ll cover the essential
+  concepts. By following this hands-on approach, you&#39;ll gain understanding
+  of Django&#39;s core features. Let&#39;s get started!
+</p>
 <h2 id="step-1-setting-up-the-project">Step 1: Setting Up the Project</h2>
-<p>Install Python: Follow the official Python installation guide for your operating system.</p>
+<p>
+  Install Python: Follow the official Python installation guide for your
+  operating system.
+</p>
 <p><strong>Create a Virtual Environment:</strong></p>
 <p>Open your terminal and run the following commands:</p>
 <pre><code><span class="hljs-attribute">python3</span> -m venv myenv
-</code></pre><pre><code><span class="hljs-keyword">source</span> myenv<span class="hljs-regexp">/bin/</span>activate
-</code></pre><p><strong>Install Django:</strong></p>
+</code></pre>
+<pre><code><span class="hljs-keyword">source</span> myenv<span class="hljs-regexp">/bin/</span>activate
+</code></pre>
+<p><strong>Install Django:</strong></p>
 <p>Run the command in your virtual environment to install Django.</p>
 <pre><code>pip <span class="hljs-keyword">install</span> django
-</code></pre><p>To check installation</p>
+</code></pre>
+<p>To check installation</p>
 <pre><code><span class="hljs-keyword">python3</span> -<span class="hljs-keyword">m</span> django --<span class="hljs-keyword">version</span>
-</code></pre><p><strong>Create a Django Project:</strong></p>
-<p>Run </p>
+</code></pre>
+<p><strong>Create a Django Project:</strong></p>
+<p>Run</p>
 <pre><code><span class="hljs-attribute">django-admin startproject myproject</span>
-</code></pre><p>To create a new Django project named <code>myproject</code>.</p>
-<h2 id="step-2-creating-and-configuring-the-database">Step 2: Creating and Configuring the Database</h2>
+</code></pre>
+<p>
+  To create a new Django project named
+  <code>myproject</code>
+  .
+</p>
+<h2 id="step-2-creating-and-configuring-the-database">
+  Step 2: Creating and Configuring the Database
+</h2>
 <p><strong>Configure Database Settings:</strong></p>
-<p>Open <code>myproject/settings.py</code> and configure the database settings according to your needs (e.g., SQLite, MySQL, PostgreSQL).</p>
+<p>
+  Open
+  <code>myproject/settings.py</code>
+  and configure the database settings according to your needs (e.g., SQLite,
+  MySQL, PostgreSQL).
+</p>
 <p><strong>Create Database Tables:</strong></p>
-<p>Run </p>
+<p>Run</p>
 <pre><code>python3 manage<span class="hljs-selector-class">.py</span> migrate
-</code></pre><p>to create the necessary database tables.</p>
-<h2 id="step-3-building-models-and-database-relationships">Step 3: Building Models and Database Relationships</h2>
+</code></pre>
+<p>to create the necessary database tables.</p>
+<h2 id="step-3-building-models-and-database-relationships">
+  Step 3: Building Models and Database Relationships
+</h2>
 <p><strong>Define Models:</strong></p>
-<p>Create a new file called <code>models.py</code> in your project&#39;s main directory. </p>
-<p>Define your models using Django&#39;s model syntax, including fields and relationships.</p>
+<p>
+  Create a new file called
+  <code>models.py</code>
+  in your project&#39;s main directory.
+</p>
+<p>
+  Define your models using Django&#39;s model syntax, including fields and
+  relationships.
+</p>
 <pre><code>
 <span class="hljs-title">from</span> django.db <span class="hljs-keyword">import</span> models
 <span class="hljs-class">
@@ -36,17 +115,30 @@
     name = models.<span class="hljs-type">CharField</span>(<span class="hljs-title">max_length</span>=100)
     price = models.<span class="hljs-type">DecimalField</span>(<span class="hljs-title">max_digits</span>=8, <span class="hljs-title">decimal_places</span>=2)
     category = models.<span class="hljs-type">ForeignKey</span>(<span class="hljs-type">Category</span>, <span class="hljs-title">on_delete</span>=<span class="hljs-title">models</span>.<span class="hljs-type">CASCADE</span>)</span>
-</code></pre><p><strong>Register Models:</strong></p>
-<p>Open <code>myproject/admin.py</code> and register your models to make them accessible via the Django admin interface.</p>
+</code></pre>
+<p><strong>Register Models:</strong></p>
+<p>
+  Open
+  <code>myproject/admin.py</code>
+  and register your models to make them accessible via the Django admin
+  interface.
+</p>
 <pre><code>
 from django<span class="hljs-selector-class">.contrib</span> import admin
 from <span class="hljs-selector-class">.models</span> import Category, Product
 
 admin<span class="hljs-selector-class">.site</span><span class="hljs-selector-class">.register</span>(Category)
 admin<span class="hljs-selector-class">.site</span><span class="hljs-selector-class">.register</span>(Product)
-</code></pre><h2 id="step-4-creating-views-and-templates">Step 4: Creating Views and Templates</h2>
+</code></pre>
+<h2 id="step-4-creating-views-and-templates">
+  Step 4: Creating Views and Templates
+</h2>
 <p><strong>Create Views:</strong></p>
-<p>In your project&#39;s main directory, create a new file called <code>views.py</code>. </p>
+<p>
+  In your project&#39;s main directory, create a new file called
+  <code>views.py</code>
+  .
+</p>
 <p>Define your views using functions or classes.</p>
 <pre><code>
 <span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render
@@ -55,9 +147,18 @@ admin<span class="hljs-selector-class">.site</span><span class="hljs-selector-cl
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">product_list</span><span class="hljs-params">(request)</span>:</span>
     products = Product.objects.all()
     <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">'product_list.html'</span>, {<span class="hljs-string">'products'</span>: products})
-</code></pre><p><strong>Create Templates:</strong></p>
-<p>Create a new directory called <code>templates</code> in your project&#39;s main directory. </p>
-<p>Inside the templates directory, create a file called <code>product_list.html</code> and define the HTML template.</p>
+</code></pre>
+<p><strong>Create Templates:</strong></p>
+<p>
+  Create a new directory called
+  <code>templates</code>
+  in your project&#39;s main directory.
+</p>
+<p>
+  Inside the templates directory, create a file called
+  <code>product_list.html</code>
+  and define the HTML template.
+</p>
 <pre><code><span class="xml">
 <span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
@@ -73,9 +174,16 @@ admin<span class="hljs-selector-class">.site</span><span class="hljs-selector-cl
       <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span>
-</code></pre><h2 id="step-5-configuring-urls-and-routing">Step 5: Configuring URLs and Routing</h2>
+</code></pre>
+<h2 id="step-5-configuring-urls-and-routing">
+  Step 5: Configuring URLs and Routing
+</h2>
 <p><strong>Create URL Patterns:</strong></p>
-<p>Open <code>myproject/urls.py</code> and define your URL patterns, mapping them to the appropriate views.</p>
+<p>
+  Open
+  <code>myproject/urls.py</code>
+  and define your URL patterns, mapping them to the appropriate views.
+</p>
 <pre><code>
 from django.urls <span class="hljs-keyword">import</span> <span class="hljs-built_in">path</span>
 from .views <span class="hljs-keyword">import</span> product_list
@@ -83,15 +191,31 @@ from .views <span class="hljs-keyword">import</span> product_list
 urlpatterns = [
     <span class="hljs-built_in">path</span>(<span class="hljs-string">'products/'</span>, product_list, <span class="hljs-keyword">name</span>=<span class="hljs-string">'product_list'</span>),
 ]
-</code></pre><h2 id="step-6-running-the-development-server">Step 6: Running the Development Server</h2>
+</code></pre>
+<h2 id="step-6-running-the-development-server">
+  Step 6: Running the Development Server
+</h2>
 <p><strong>Start the Development Server:</strong></p>
-<p>In your terminal, run below command to start the Django development server.</p>
+<p>
+  In your terminal, run below command to start the Django development server.
+</p>
 <pre><code>python manage<span class="hljs-selector-class">.py</span> runserver
-</code></pre><p><strong>Access the Web Application:</strong></p>
-<p>Open your web browser and navigate to <code>http://localhost:8000/products/</code> to see the product list page rendered.</p>
-<h2 id="step-7-adding-user-authentication">Step 7: Adding User Authentication</h2>
+</code></pre>
+<p><strong>Access the Web Application:</strong></p>
+<p>
+  Open your web browser and navigate to
+  <code>http://localhost:8000/products/</code>
+  to see the product list page rendered.
+</p>
+<h2 id="step-7-adding-user-authentication">
+  Step 7: Adding User Authentication
+</h2>
 <p><strong>Enable Authentication URLs:</strong></p>
-<p>Open <code>myproject/urls.py</code> and add the authentication URLs provided by Django.</p>
+<p>
+  Open
+  <code>myproject/urls.py</code>
+  and add the authentication URLs provided by Django.
+</p>
 <pre><code>
 from django.contrib <span class="hljs-keyword">import</span> admin
 from django.urls <span class="hljs-keyword">import</span> <span class="hljs-built_in">path</span>, include
@@ -101,8 +225,13 @@ urlpatterns = [
     <span class="hljs-built_in">path</span>(<span class="hljs-string">'accounts/'</span>, include(<span class="hljs-string">'django.contrib.auth.urls'</span>)),
     # other URL patterns
 ]
-</code></pre><p><strong>Create User Registration View:</strong></p>
-<p>Create a new file called <code>views.py</code> in your project&#39;s main directory and define a view for user registration.</p>
+</code></pre>
+<p><strong>Create User Registration View:</strong></p>
+<p>
+  Create a new file called
+  <code>views.py</code>
+  in your project&#39;s main directory and define a view for user registration.
+</p>
 <pre><code>
 <span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render, redirect
 <span class="hljs-keyword">from</span> django.contrib.auth.forms <span class="hljs-keyword">import</span> UserCreationForm
@@ -116,9 +245,20 @@ urlpatterns = [
     <span class="hljs-keyword">else</span>:
         form = UserCreationForm()
     <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">'registration/register.html'</span>, {<span class="hljs-string">'form'</span>: form})
-</code></pre><p><strong>Create Registration Template:</strong></p>
-<p>Create a new directory called <code>registration</code> inside the <code>templates</code> directory. </p>
-<p>Inside the registration directory, create a file called <code>register.html</code> and define the registration form template.</p>
+</code></pre>
+<p><strong>Create Registration Template:</strong></p>
+<p>
+  Create a new directory called
+  <code>registration</code>
+  inside the
+  <code>templates</code>
+  directory.
+</p>
+<p>
+  Inside the registration directory, create a file called
+  <code>register.html</code>
+  and define the registration form template.
+</p>
 <pre><code><span class="xml">
 <span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
@@ -134,8 +274,13 @@ urlpatterns = [
     <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span>
-</code></pre><p><strong>Update URL Patterns:</strong></p>
-<p>Open <code>myproject/urls.py</code> and add a URL pattern for the user registration view.</p>
+</code></pre>
+<p><strong>Update URL Patterns:</strong></p>
+<p>
+  Open
+  <code>myproject/urls.py</code>
+  and add a URL pattern for the user registration view.
+</p>
 <pre><code>
 from .views <span class="hljs-keyword">import</span> <span class="hljs-keyword">register</span>
 
@@ -143,25 +288,102 @@ urlpatterns = [
     <span class="hljs-meta"># existing URL patterns</span>
     path(<span class="hljs-string">'accounts/register/'</span>, <span class="hljs-keyword">register</span>, name=<span class="hljs-string">'register'</span>),
 ]
-</code></pre><h2 id="conclusion">Conclusion</h2>
-<p>Congratulations on completing the practical Django tutorial for beginners! You&#39;ve built a simple web application with database models, views, templates, URL routing, and user authentication. This hands-on approach should have provided you with a foundation in Django development. Keep exploring Django&#39;s extensive features and consider building more complex projects to further enhance your skills. </p>
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>
+  Congratulations on completing the practical Django tutorial for beginners!
+  You&#39;ve built a simple web application with database models, views,
+  templates, URL routing, and user authentication. This hands-on approach should
+  have provided you with a foundation in Django development. Keep exploring
+  Django&#39;s extensive features and consider building more complex projects to
+  further enhance your skills.
+</p>
 <p><strong>Happy coding!</strong></p>
 <h2 id="step-8-further-learning">Step 8: Further Learning</h2>
 <p><strong>Django Documentation:</strong></p>
-<p>The official Django documentation is an excellent resource to explore in-depth explanations, tutorials, and reference materials. Visit the Django documentation website at <a href="https://docs.djangoproject.com/">https://docs.djangoproject.com/</a> to access the latest documentation.</p>
+<p>
+  The official Django documentation is an excellent resource to explore in-depth
+  explanations, tutorials, and reference materials. Visit the Django
+  documentation website at
+  <a href="https://docs.djangoproject.com/">https://docs.djangoproject.com/</a>
+  to access the latest documentation.
+</p>
 <p><strong>Django for Beginners:</strong></p>
-<p>A step-by-step guidebook written by William S. Vincent that covers the basics of Django development. It provides hands-on examples and practical explanations for beginners. You can find it at <a href="https://djangoforbeginners.com/">https://djangoforbeginners.com/</a>.</p>
+<p>
+  A step-by-step guidebook written by William S. Vincent that covers the basics
+  of Django development. It provides hands-on examples and practical
+  explanations for beginners. You can find it at
+  <a href="https://djangoforbeginners.com/">https://djangoforbeginners.com/</a>
+  .
+</p>
 <p><strong>Django Girls Tutorial:</strong></p>
-<p>Django Girls offers a beginner-friendly tutorial that walks you through building a simple web application using Django. It provides clear instructions and code examples. Access the tutorial at <a href="https://tutorial.djangogirls.org/">https://tutorial.djangogirls.org/</a>.</p>
+<p>
+  Django Girls offers a beginner-friendly tutorial that walks you through
+  building a simple web application using Django. It provides clear instructions
+  and code examples. Access the tutorial at
+  <a href="https://tutorial.djangogirls.org/">
+    https://tutorial.djangogirls.org/
+  </a>
+  .
+</p>
 <p><strong>DjangoCon Videos:</strong></p>
-<p>DjangoCon is an annual conference focused on Django and web development. The conference features talks and presentations by industry experts. You can find recorded videos from past DjangoCon events on YouTube and the official DjangoCon website.</p>
+<p>
+  DjangoCon is an annual conference focused on Django and web development. The
+  conference features talks and presentations by industry experts. You can find
+  recorded videos from past DjangoCon events on YouTube and the official
+  DjangoCon website.
+</p>
 <p><strong>Django Project&#39;s YouTube Channel:</strong></p>
-<p>The Django Project maintains a YouTube channel where you can find video tutorials, talks, and interviews related to Django. Visit the channel at <a href="https://www.youtube.com/user/django">https://www.youtube.com/user/django</a>.</p>
+<p>
+  The Django Project maintains a YouTube channel where you can find video
+  tutorials, talks, and interviews related to Django. Visit the channel at
+  <a href="https://www.youtube.com/user/django">
+    https://www.youtube.com/user/django
+  </a>
+  .
+</p>
 <p><strong>Two Scoops of Django:</strong></p>
-<p>A comprehensive book by Daniel Roy Greenfeld and Audrey Roy Greenfeld that provides best practices, tips, and techniques for Django development. It covers various topics and advanced concepts. Find it at <a href="https://www.twoscoopspress.com/products/two-scoops-of-django-3-x">https://www.twoscoopspress.com/products/two-scoops-of-django-3-x</a>.</p>
+<p>
+  A comprehensive book by Daniel Roy Greenfeld and Audrey Roy Greenfeld that
+  provides best practices, tips, and techniques for Django development. It
+  covers various topics and advanced concepts. Find it at
+  <a href="https://www.twoscoopspress.com/products/two-scoops-of-django-3-x">
+    https://www.twoscoopspress.com/products/two-scoops-of-django-3-x
+  </a>
+  .
+</p>
 <p><strong>Django Reddit and Forum:</strong></p>
-<p>Engage with the Django community through platforms like the Django subreddit <a href="https://www.reddit.com/r/django/">https://www.reddit.com/r/django/</a> and the Django forum <a href="https://forum.djangoproject.com/">https://forum.djangoproject.com/</a>. Participate in discussions, ask questions, and learn from other Django developers.</p>
+<p>
+  Engage with the Django community through platforms like the Django subreddit
+  <a href="https://www.reddit.com/r/django/">
+    https://www.reddit.com/r/django/
+  </a>
+  and the Django forum
+  <a href="https://forum.djangoproject.com/">
+    https://forum.djangoproject.com/
+  </a>
+  . Participate in discussions, ask questions, and learn from other Django
+  developers.
+</p>
 <p><strong>Django Packages:</strong></p>
-<p>Explore the Django Packages website <a href="https://djangopackages.org/">https://djangopackages.org/</a> to discover and explore a wide range of Django packages and libraries. It&#39;s a valuable resource to find pre-built solutions for common functionalities.</p>
-<p><strong><em>Remember, practice is key to mastering Django. Work on personal projects, contribute to open-source projects, and experiment with different features and techniques. Stay up-to-date with the latest Django releases and advancements in the Django ecosystem.</em></strong> </p>
+<p>
+  Explore the Django Packages website
+  <a href="https://djangopackages.org/">https://djangopackages.org/</a>
+  to discover and explore a wide range of Django packages and libraries.
+  It&#39;s a valuable resource to find pre-built solutions for common
+  functionalities.
+</p>
+<p>
+  <strong>
+    <em>
+      Remember, practice is key to mastering Django. Work on personal projects,
+      contribute to open-source projects, and experiment with different features
+      and techniques. Stay up-to-date with the latest Django releases and
+      advancements in the Django ecosystem.
+    </em>
+  </strong>
+</p>
 <h3 id="happy-learning-">Happy learning!</h3>
+
+</body>
+</html>
