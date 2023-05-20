@@ -35,142 +35,73 @@ python3 -m django --version
 Run 
 
 ```
-django-admin startproject myproject
+django-admin startproject shop
 ```
-To create a new Django project named ``` myproject ```.
+To create a new Django project named ``` shop ```.
 
-## Step 2: Creating and Configuring the Database
-
-**Configure Database Settings:**
-
-Open ``` myproject/settings.py ``` and configure the database settings according to your needs (e.g., SQLite, MySQL, PostgreSQL).
-
-**Create Database Tables:**
-
-Run 
+Run
 
 ```
-python3 manage.py migrate
+python3 manage.py runserver 
 ```
 
-to create the necessary database tables.
+To run the development server
 
-## Step 3: Building Models and Database Relationships
+## Step 2: Creating new application inside project
 
-**Define Models:**
-
-Create a new file called ``` models.py ``` in your project's main directory. 
-
-Define your models using Django's model syntax, including fields and relationships.
+Run
 
 ```
 
-from django.db import models
-
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-class Product(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    
-```
-
-**Register Models:**
-
-Open ``` myproject/admin.py ``` and register your models to make them accessible via the Django admin interface.
+python3 manage.py startapp products
 
 ```
 
-from django.contrib import admin
-from .models import Category, Product
+This command should be executed in the same directory where the ```manage.py``` file is located, which is the root directory of your Django project.
 
-admin.site.register(Category)
-admin.site.register(Product)
+After running this command, Django will generate a new folder named "products" with the initial structure of the app
 
-```
-
-## Step 4: Creating Views and Templates
-
-**Create Views:**
-
-In your project's main directory, create a new file called ``` views.py ```. 
-
-Define your views using functions or classes.
+Once you've created the "products" app, you'll need to include it in your project's settings. Open the ```shop/settings.py``` file and find the ```INSTALLED_APPS``` list and add ```"products.apps.ProductsConfig"``` to the list
 
 ```
 
-from django.shortcuts import render
-from .models import Category, Product
-
-def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'product_list.html', {'products': products})
-    
-```
-
-**Create Templates:**
-
-Create a new directory called ``` templates ``` in your project's main directory. 
-
-Inside the templates directory, create a file called ``` product_list.html ``` and define the HTML template.
-
-```
-
-<!DOCTYPE html>
-<html>
-  <head>
-      <title>Product List</title>
-  </head>
-  <body>
-      <h1>Product List</h1>
-      <ul>
-          {% for product in products %}
-              <li>{{ product.name }} - ${{ product.price }}</li>
-          {% endfor %}
-      </ul>
-  </body>
-</html>
-
-```
-
-## Step 5: Configuring URLs and Routing
-
-**Create URL Patterns:**
-
-Open ``` myproject/urls.py ``` and define your URL patterns, mapping them to the appropriate views.
-
-```
-
-from django.urls import path
-from .views import product_list
-
-urlpatterns = [
-    path('products/', product_list, name='product_list'),
+INSTALLED_APPS = [
+    # ...
+    "products.apps.ProductsConfig",
+    # ...
 ]
 
 ```
 
-## Step 6: Running the Development Server
+## Step 3: Creating Views and Configuring URLs and Routing
 
-**Start the Development Server:**
-
-In your terminal, run below command to start the Django development server.
+Open the file ```views.py``` inside the ```products``` folder and add the code given below
 
 ```
-python manage.py runserver 
+
+from django.shortcuts import render
+from django.http import HttpResponse
+
+# Create your views here.
+def index(request):
+    return HttpResponse("Hello, world. You're at the products index.") 
+
 ```
 
-**Access the Web Application:**
+Create a file ```urls.py``` inside products folder and add the code below
 
-Open your web browser and navigate to ``` http://localhost:8000/products/ ``` to see the product list page rendered.
+```
 
-## Step 7: Adding User Authentication
+from django.urls import path
+from . import views
 
-**Enable Authentication URLs:**
+urlpatterns = [
+    path('', views.index, name='index'),
+]
 
-Open ``` myproject/urls.py ``` and add the authentication URLs provided by Django.
+```
+
+Now open ```urls.py``` in shop folder and add code given below
 
 ```
 
@@ -178,77 +109,198 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    # other URL patterns
+    path("admin/", admin.site.urls),
+    path("products/", include("products.urls")),
 ]
 
 ```
 
-**Create User Registration View:**
+Now run the server using command
 
-Create a new file called ``` views.py ``` in your project's main directory and define a view for user registration.
+```
+python3 manage.py runserver 
+```
+
+Open the url ```http://127.0.0.1:8000/products/``` to see the first django app
+
+## Step 4: Building Models and Database Relationships
+
+
+**Configure Database Settings:**
+
+Open ``` shop/settings.py ``` and configure the database settings according to your needs (e.g., SQLite, MySQL, PostgreSQL).
+
+**Define Models:**
+
+Open file called ``` models.py ``` in ```products``` directory. 
+
+Define your models using Django's model syntax, including fields and relationships.
 
 ```
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.db import models
 
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('product_list')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
+# Create your models here.
+class Product(models.Model):
+    name = models.CharField(max_length=200)
+    price = models.FloatField()
+    stock = models.IntegerField()
+    image = models.CharField(max_length=3000)
     
-```    
+```
 
-**Create Registration Template:**
+**Create Database Tables:**
 
-Create a new directory called ``` registration ``` inside the ``` templates ``` directory. 
+Run 
 
-Inside the registration directory, create a file called ``` register.html ``` and define the registration form template.
+```
+python3 manage.py makemigrations
+```
+
+```
+python3 manage.py migrate
+```
+
+to create the necessary database tables.
+
+Now install [DB Browser for SQLite](https://sqlitebrowser.org/dl/) and open ```db.sqlite3``` file inside project directory to view it
+
+## Step 5: Django Admin Panel
+
+Before acccessing the django admin page we need to create an admin user for that
+
+Run
 
 ```
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Registration</title>
-</head>
-<body>
-    <h1>User Registration</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
-</body>
+python manage.py createsuperuser
+
+```
+
+provide username, email and password to complete admin user creation
+
+**Register Models:**
+
+Open ``` products/admin.py ``` and register your models to make them accessible via the Django admin interface.
+
+```
+
+from django.contrib import admin
+from .models import Product
+
+# Register your models here.
+admin.site.register(Product)
+
+```
+
+To customise view of products in admin panel
+
+```
+
+from django.contrib import admin
+from .models import Product
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'stock')
+
+# Register your models here.
+admin.site.register(Product, ProductAdmin)
+
+```
+
+## Step 6: Creating Templates
+
+Create a folder called ```templates``` inside products directory
+
+Inside templates folder create a html file called ```index.html```
+
+```
+
+<h2>Products</h2>
+<ul>
+    {% for product in products %}
+        <li>{{ product.name }}</li>
+    {% endfor %}
+</ul>
+
+```
+
+Now modify the ```views.py``` file so as to display index.html
+
+```
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Product
+
+# Create your views here.
+def index(request):
+    products = Product.objects.all()
+    return render(request, 'index.html', {'products': products}) 
+    
+```
+
+## Step 7: Using Bootstrap
+
+Create a file called ```theme.html``` inside ```products/templates``` directory as given below
+
+```
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  </head>
+  <body>
+    {% block content %}
+
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
 </html>
 
 ```
 
-**Update URL Patterns:**
-
-Open ``` myproject/urls.py ``` and add a URL pattern for the user registration view.
+Modify ```index.html``` as given below
 
 ```
 
-from .views import register
+{% extends 'theme.html' %}
 
-urlpatterns = [
-    # existing URL patterns
-    path('accounts/register/', register, name='register'),
-]
+{% block content %}
 
+<h2>Products</h2>
+
+<div class="container">
+
+    {% for product in products %}
+             
+        <div class="card" style="width: 18rem;">
+            <img src="{{product.image}}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">${{product.price}}</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    
+    {% endfor %}  
+
+</div>
+    
+{% endblock %}
+    
 ```
+
+Your Shop is now complete. You can modify this app as per your creativity and logic
 
 ## Conclusion
 
-Congratulations on completing the practical Django tutorial for beginners! You've built a simple web application with database models, views, templates, URL routing, and user authentication. This hands-on approach should have provided you with a foundation in Django development. Keep exploring Django's extensive features and consider building more complex projects to further enhance your skills. 
+Congratulations on completing the practical Django tutorial for beginners! You've built a simple web application with database models, views, templates, URL routing. This hands-on approach should have provided you with a foundation in Django development. Keep exploring Django's extensive features and consider building more complex projects to further enhance your skills. 
 
 **Happy coding!**
 
