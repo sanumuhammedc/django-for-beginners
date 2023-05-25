@@ -1,17 +1,25 @@
-{% extends 'base.html' %}
+
+{% extends 'theme.html' %}
 
 {% block content %}
-<h1>Products</h1>
-<div class="container d-flex justify-content-around flex-wrap">
+
+<h2 class="mt-3 mx-5">Products</h2>
+
+<div class="container d-flex justify-content-around flex-wrap mt-5">
     {% for product in products %}
-    <div class="card mb-5" style="width: 18rem;">
-        <img src="{{product.image_url}}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{product.name}}</h5>
-          <p class="card-text">₹ {{product.price}}</p>
-          <a href="#" class="btn btn-primary">Buy Now</a>
+             
+        <div class="card mb-5 p-2" style="width: 18rem;">
+            <img height="250px" src="{{product.image}}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">₹ {{product.price}}</p>
+            <a href="#" class="btn btn-primary">Buy Now</a>
+            </div>
         </div>
-    </div>
-    {% endfor %}
-</div>    
-{% endblock %}  
+    
+    {% endfor %}  
+
+</div>
+    
+{% endblock %}
+    
